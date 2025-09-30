@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+
+    <!-- Первый столбец -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M4,14 L7,14 L7,19 L4,19 z"/>
+
+    <!-- Второй столбец -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M9,10 L12,10 L12,19 L9,19 z"/>
+
+    <!-- Третий столбец -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M14,7 L17,7 L17,19 L14,19 z"/>
+</vector>
