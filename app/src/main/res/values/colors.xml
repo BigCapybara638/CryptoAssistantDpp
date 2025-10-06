@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="cartsDefolt">#E9E9E9</color>
     <color name="menu">#ECECFF</color>
+
+    <color name="green">#FF198754</color>
+    <color name="red">#FFDC3545</color>
 </resources>
