@@ -1,12 +1,10 @@
 package com.example.cryptoassistant.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoassistant.price.CryptoItem
-import com.example.cryptoassistant.price.CryptoRepository
-import com.example.cryptoassistant.price.GlobalStats
+import com.example.cryptoassistant.cryptoprice.CryptoItem
+import com.example.cryptoassistant.cryptoprice.CryptoRepository
+import com.example.cryptoassistant.cryptoprice.GlobalStats
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

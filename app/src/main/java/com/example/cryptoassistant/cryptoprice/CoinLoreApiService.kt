@@ -1,4 +1,4 @@
-package com.example.cryptoassistant.price
+package com.example.cryptoassistant.cryptoprice
 
 import retrofit2.http.GET
 import retrofit2.http.Path

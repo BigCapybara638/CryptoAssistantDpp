@@ -1,16 +1,13 @@
 package com.example.cryptoassistant.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptoassistant.R
 import com.example.cryptoassistant.databinding.ItemHomeCryptotopsBinding
-import com.example.cryptoassistant.price.CryptoItem
+import com.example.cryptoassistant.cryptoprice.CryptoItem
 
 class HomeCryptoTopAdapter : ListAdapter<CryptoItem, HomeCryptoTopAdapter.CryptoViewHolder>(DIFF_CALLBACK) {
 
