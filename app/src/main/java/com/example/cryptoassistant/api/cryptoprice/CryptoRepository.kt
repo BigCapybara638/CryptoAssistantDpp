@@ -1,4 +1,6 @@
-package com.example.cryptoassistant.cryptoprice
+package com.example.cryptoassistant.api.cryptoprice
+
+import com.example.cryptoassistant.api.RetrofitClient
 
 class CryptoRepository {
 

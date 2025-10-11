@@ -25,6 +25,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private val cryptoAdapter = HomeCryptoTopAdapter()
+    private val newsAdapter = HomeCryptoNewsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,62 +33,91 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
+        setupRecyclerViews()
         setupObservers()
-
-        // Загружаем данные
-        viewModel.loadData()
-
-        // Обновление по свайпу
-//        binding.swipeRefresh.setOnRefreshListener {
-//            viewModel.loadData()
-//        }
+        viewModel.loadAllData()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerViews() {
+        // Криптовалюты - горизонтально
         binding.cryptoTopRecyclerView.apply {
             adapter = cryptoAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
+        // Новости - вертикально
+        binding.cryptoNewsRecyclerView.apply {
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     private fun setupObservers() {
+        // Криптовалюты - используем cryptosState
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.cryptos.collect { cryptos ->
-                println("🔄 Updating adapter with ${cryptos.size} items")
-                cryptoAdapter.submitList(cryptos)
-
-                // Показываем сообщение если список пустой
-                if (cryptos.isEmpty()) {
-                    println("⚠️ No data to display")
-                } else {
-                    println("✅ Data displayed successfully")
+            viewModel.cryptosState.collect { state ->
+                when (state) {
+                    is DataState.Success -> {
+                        cryptoAdapter.submitList(state.data)
+                        println("🔄 Cryptos updated: ${state.data.size} items")
+                    }
+                    is DataState.Error -> {
+                        println("❌ Crypto error: ${state.message}")
+                    }
+                    is DataState.Loading -> {
+                        println("⏳ Loading cryptos...")
+                    }
                 }
             }
         }
 
+        // Новости - используем newsState
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isLoading.collect { isLoading ->
-                binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-                //binding.swipeRefresh.isRefreshing = isLoading
+            viewModel.newsState.collect { state ->
+                when (state) {
+                    is DataState.Success -> {
+                        newsAdapter.submitList(state.data)
+                        println("🔄 News updated: ${state.data.size} items")
+                    }
+                    is DataState.Error -> {
+                        println("❌ News error: ${state.message}")
+                    }
+                    is DataState.Loading -> {
+                        println("⏳ Loading news...")
+                    }
+                }
             }
         }
 
+        // Общая загрузка
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isLoading.collect { isLoading ->
+                binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            }
+        }
+
+        // Общие ошибки
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.error.collect { error ->
                 error?.let {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
                     println("❌ Error: $it")
+                }
+            }
+        }
+
+        // Обновление данных
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isRefreshing.collect { isRefreshing ->
+                // Можно добавить индикатор обновления если нужно
+                if (isRefreshing) {
+                    println("🔄 Refreshing data...")
                 }
             }
         }

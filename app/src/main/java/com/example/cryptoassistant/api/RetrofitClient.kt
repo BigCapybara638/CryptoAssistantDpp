@@ -1,6 +1,7 @@
-package com.example.cryptoassistant.cryptoprice
+package com.example.cryptoassistant.api
 
-import com.example.cryptoassistant.crypronews.CoinDeskApiService
+import com.example.cryptoassistant.api.crypronews.CoinDeskApiService
+import com.example.cryptoassistant.api.cryptoprice.CoinLoreApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,7 +14,7 @@ object RetrofitClient {
     private const val COINLORE_BASE_URL = "https://api.coinlore.net/api/"
 
     // Второй API (например, CoinGecko)
-    private const val COINDESK_BASE_URL = "https://api.coindesk.com/"
+    private const val COINDESK_BASE_URL = "https://data-api.coindesk.com/news/v1/article/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

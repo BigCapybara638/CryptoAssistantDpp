@@ -1,4 +1,4 @@
-package com.example.cryptoassistant.cryptoprice
+package com.example.cryptoassistant.api.cryptoprice
 
 import com.google.gson.annotations.SerializedName
 
