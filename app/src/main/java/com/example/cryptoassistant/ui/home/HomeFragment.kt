@@ -1,5 +1,7 @@
 package com.example.cryptoassistant.ui.home
 
+
+import com.example.cryptoassistant.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.example.cryptoassistant.api.crypronews.CryptoNewsItem
 import com.example.cryptoassistant.databinding.FragmentDashboardBinding
 import com.example.cryptoassistant.databinding.FragmentHomeBinding
 import com.example.cryptoassistant.ui.dashboard.DashboardViewModel
@@ -56,6 +60,26 @@ class HomeFragment : Fragment() {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+
+        // клик на новость
+        newsAdapter.onItemClick = { newsItem ->
+            openNewsDetail(newsItem)
+        }
+    }
+
+    private fun openNewsDetail(newsItem: CryptoNewsItem) {
+        val bundle = Bundle().apply {
+            putString("news_title", newsItem.title)
+            putString("news_body", newsItem.body)
+            putString("news_image", newsItem.imageUrl)
+            putString("news_source", newsItem.sourceData?.sourceName)
+            putString("news_url", newsItem.url)
+        }
+
+        findNavController().navigate(
+            R.id.action_first_to_second,
+            bundle)
+
     }
 
     private fun setupObservers() {

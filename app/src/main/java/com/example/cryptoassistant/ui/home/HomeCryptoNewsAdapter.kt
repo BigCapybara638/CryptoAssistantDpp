@@ -13,6 +13,7 @@ import com.example.cryptoassistant.databinding.ItemHomeNewsBinding
 
 class HomeCryptoNewsAdapter: ListAdapter<CryptoNewsItem, HomeCryptoNewsAdapter.HomeCryptoNewsViewHolder>(DIFF_CALLBACK) {
 
+    var onItemClick: ((CryptoNewsItem) -> Unit)? = null
     inner class HomeCryptoNewsViewHolder(private val binding: ItemHomeNewsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -21,6 +22,10 @@ class HomeCryptoNewsAdapter: ListAdapter<CryptoNewsItem, HomeCryptoNewsAdapter.H
             binding.cryptoNewsTitle.text = crypto.title
             binding.resourceName.text = crypto.sourceData?.sourceName
             binding.cryptoNewsTime.text = crypto.relativeTime
+
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(crypto)
+            }
         }
     }
 

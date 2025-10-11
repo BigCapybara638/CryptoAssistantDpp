@@ -9,7 +9,18 @@
         android:id="@+id/navigation_home"
         android:name="com.example.cryptoassistant.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_first_to_second"
+            app:destination="@id/navigation_news"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="false"
+            app:launchSingleTop="true"
+        />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -17,4 +28,13 @@
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
-    </navigation>
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.example.cryptoassistant.ui.home.NewsFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_news">
+
+    </fragment>
+
+
+</navigation>

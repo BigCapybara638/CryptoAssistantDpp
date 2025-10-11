@@ -1,5 +1,6 @@
 package com.example.cryptoassistant.api.crypronews
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.Date
