@@ -20,6 +20,7 @@ class HomeCryptoNewsAdapter: ListAdapter<CryptoNewsItem, HomeCryptoNewsAdapter.H
             // Используем  ID из  layout
             binding.cryptoNewsTitle.text = crypto.title
             binding.resourceName.text = crypto.sourceData?.sourceName
+            binding.cryptoNewsTime.text = crypto.relativeTime
         }
     }
 

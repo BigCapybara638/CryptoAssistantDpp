@@ -1,6 +1,9 @@
 package com.example.cryptoassistant.api.crypronews
 
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 // Главный ответ от API
 data class CryptoNewsResponse(
@@ -19,7 +22,15 @@ data class CryptoNewsItem(
     @SerializedName("SOURCE_DATA") val sourceData: SourceData?,
     @SerializedName("CATEGORY_DATA") val categoryData: List<CategoryData>? = null,
     @SerializedName("SENTIMENT") val sentiment: String? = null
-)
+) {
+    val formattedDate: String
+        get() = publishedOn.toFormattedDate()
+
+        // Computed property для относительного времени
+    val relativeTime: String
+        get() = publishedOn.toRelativeTime()
+
+}
 
 // Ресурс
 data class SourceData(
@@ -31,3 +42,22 @@ data class SourceData(
 data class CategoryData(
     @SerializedName("NAME") val name: String
 )
+
+fun Long.toFormattedDate(): String {
+    val date = Date(this * 1000) // Умножаем на 1000, т.к. timestamp в секундах
+    val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+    return formatter.format(date)
+}
+
+fun Long.toRelativeTime(): String {
+    val currentTime = System.currentTimeMillis() / 1000
+    val diff = currentTime - this
+
+    return when {
+        diff < 60 -> "только что"
+        diff < 3600 -> "${diff / 60} мин. назад"
+        diff < 86400 -> "${diff / 3600} ч. назад"
+        diff < 2592000 -> "${diff / 86400} дн. назад"
+        else -> this.toFormattedDate()
+    }
+}

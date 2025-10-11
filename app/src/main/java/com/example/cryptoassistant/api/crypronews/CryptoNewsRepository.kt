@@ -17,10 +17,8 @@ class CryptoNewsRepository {
             }
 
             // Если реальные новости пустые, используем заглушку
-            if (realNews.isEmpty()) {
+            realNews.ifEmpty {
                 getMockNews(limit)
-            } else {
-                realNews
             }
         } catch (e: Exception) {
             println("❌ All news sources failed, using mock data")
